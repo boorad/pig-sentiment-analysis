@@ -71,7 +71,7 @@ d3.tsv("data.tsv", function(error, data) {
     	d.type = "additional exhibit";
     }
   });
-	
+
   x.domain(d3.extent(data, function(d) { return d.negative*1.1; })).nice();
   y.domain(d3.extent(data, function(d) { return d.positive*1.1; })).nice();
 
@@ -164,18 +164,18 @@ d3.tsv("data.tsv", function(error, data) {
 
   var data2=d3.nest()
     .key(function(d) {return d.type;})
-	.sortValues(function(a,b) { 
+	.sortValues(function(a,b) {
 	var lhs = a.year*365+a.month*31+a.day;
 	var rhs = b.year*365+b.month*31+b.day;
 	return  rhs < lhs ? -1 : rhs > lhs ? 1 : 0;
 	})
     .entries(data);
-   
+
   var g = svg2.selectAll("g").data(data2).enter()
     .append("g")
     .attr("transform",function(d,i) {return "translate(0, " + (120*i) + ")";});
 
-		
+
 	g.append("rect")
     .attr("x",0)
     .attr("y",0)
@@ -185,8 +185,8 @@ d3.tsv("data.tsv", function(error, data) {
     .attr("stroke", "black")
       .append("title")
       .text(function(d) {return d.key;});
-  
-	  
+
+
 	var pline = d3.svg.line()
     .x(function(d,i){
 		return x2(d.year*365+d.month*31+d.day);
@@ -205,7 +205,7 @@ d3.tsv("data.tsv", function(error, data) {
 
 	g.append("path")
 	  .attr("d", function(d) { return pline(d.values); })
-	.style("stroke", "blue");	
+	.style("stroke", "blue");
 
 	g.append("path")
 	  .attr("d", function(d) { return nline(d.values); })
